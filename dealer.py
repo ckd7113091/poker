@@ -1,17 +1,18 @@
-from random import randint,shuffle
+from Crypto.Random.random import shuffle
 
 class Dealer:
 	deck = range(52)
 	community = []
 	burned = []
+	a = None
 
 	def __init__(self):
 		self.shuffle()
 		return
 
-	def int2card(self,num):
+	def int2card(self,n):
 		suits = ['C','S','H','D']
-		return (num//4+1, suits[num%4])
+		return (n//4+1, suits[n%4])
 
 	def shuffle(self):
 		self.deck = range(52)
@@ -19,8 +20,7 @@ class Dealer:
 		return
 
 	def deal(self,players):
-		hands = [[0]*2]*players
-
+		hands = [[0 for i in range(2)] for i in range(players)]
 		for i in range(players*2):
 			hands[i%players][i//players] = self.int2card(self.deck.pop())
 		return hands
@@ -37,7 +37,7 @@ class Dealer:
 			self.community.append(self.int2card(self.deck.pop()))
 			return self.community
 
-		return
+		return self.community
 
 	def showdown(self,players):
 		ranks = []
