@@ -6,11 +6,12 @@ class Hand:
 
 	def combine(self, cards):
 		combs = []
-		for i in range(7):
-			for j in range(i+1,7):
-				for k in range(j+1,7):
-					for l in range(j+1,7):
-						for m in range(l+1,7):
+		lim = len(cards)
+		for i in range(lim):
+			for j in range(i+1,lim):
+				for k in range(j+1,lim):
+					for l in range(k+1,lim):
+						for m in range(l+1,lim):
 							combs.append(sorted([cards[i],cards[j],\
 								cards[k],cards[l],cards[m]]))
 		return combs
@@ -77,4 +78,8 @@ class Hand:
 
 		if len(toret) == 0: return
 
-		return [a for a in toret] + [[vals[j] for j in range(len(vals)) if not inc[j]]]
+		return [a for a in toret] +\
+			[[vals[j] for j in range(len(vals)) if not inc[j]]]
+
+	def getcards(self):
+		return self.hand
