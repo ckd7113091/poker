@@ -23,15 +23,15 @@ class Hand:
 
 	def rank(self,hand):
 		if self.straight(hand) and self.flush(hand):
-			return [10,max(hand)]
+			return [10,max(hand)[0]]
 		if self.kind(4,hand):
 			return [9,self.kind(4,hand)]
 		if self.kind(3,hand) and self.kind(2,hand):
-			return [8, self.kind(3,hand),self.kind(2,hand)]
+			return [8, self.kind(3,hand)]
 		if self.flush(hand):
-			return [7,hand]
+			return [7,sorted([i[0] for i in hand],reverse=True)]
 		if self.straight(hand):
-			return [6, max(hand)]
+			return [6, max(hand)[0]]
 		if self.kind(3,hand):
 			return [5, self.kind(3,hand)]
 		if self.kind(2,hand) and len(self.kind(2,hand)) == 3:
@@ -39,12 +39,12 @@ class Hand:
 		if self.kind(2,hand):
 			return [3, self.kind(2,hand)]
 		else:
-			return [2,max(hand)]
+			return [2,max(hand)[0]]
 
 	def straight(self,hand):
 		vals = [i[0] for i in hand]
 		for i in range(4):
-			if vals[i] + 1 != vals[i+1]:
+			if vals[i] - 1 != vals[i+1]:
 				return False
 		return True
 
@@ -58,21 +58,23 @@ class Hand:
 	def kind(self,of,hand):
 		vals = [i[0] for i in hand]
 		toret = []
-		inc = [True]*5
-		for i in range(5-of):
+		inc = [False]*5
+		for i in range(5-of+1):
+			if inc[i]: continue
 			start = True
 			for j in range(i+1,i+of):
-				if vals[j] != vals[i]:
+				if vals[j] != vals[i] or inc[j]:
 					start = False
 					break
 
 			if vals[i] == vals[i-1]: start = False
-			elif i+of < 3 and vals[i] != vals[i+of+1]: start = False
+			elif i+of < 5 and vals[i] == vals[i+of]:
+				start = False
 
 			if start:
 				toret.append(vals[i])
-				inc[i:i+of] = [False]*of
+				inc[i:i+of] = [True]*of
 
-			if len(toret) == 0: return
+		if len(toret) == 0: return
 
-		return [a for a in toret] + [[vals[j] for j in range(len(vals)) if inc[j]]]
+		return [a for a in toret] + [[vals[j] for j in range(len(vals)) if not inc[j]]]

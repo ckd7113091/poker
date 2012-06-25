@@ -45,32 +45,8 @@ class Dealer:
 				winner = i
 				tie = []
 			elif ranks[i][0] == ranks[winner][0]:
-				#If it's a straight flush or a straight, check the high card. 
-				#If it's a flush, compare the hands.
-				if ranks[i][0] == 10 or ranks[i] == 6:
-					if ranks[i][1] > ranks[winner][1]:
-						winner = i
-						tie = []
-					elif ranks[i][1] == ranks[winner][1]:
-						tie.append(i)
-			#If it's a full house, check the pair.
-			elif ranks[i] == 8:
-				if ranks[i][2][0] > ranks[winner][2][0]:
+				if ranks[i][1] > ranks[winner][1]:
 					winner = i
 					tie = []
-				elif ranks[i][2][0] == ransk[winner[2][0]:
-					tie.append(i)
-			#If it's not a straight, flush, or full house, then check the first card.
-			elif ranks[i][1][0] > ranks[winner][1][0]:
-				winner = i
-				tie = []
-			elif ranks[i][1][0] == ranks[winner][1][0]:
-				#If the first hands are the same, and it's a four-of-a-kind, tie.
-				if ranks[i] == 9:
-					tie.append(i)
-				#Otherwise, check the card/hand.
-				elif ranks[i][1][1] > ranks[winner][1][1]:
-					winner = i
-					tie = []
-				elif ranks[i][1][1] == ranks[winner][1][1]:
+				elif ranks[i][1] == ranks[winner][1]:
 					tie.append(i)
