@@ -1,10 +1,14 @@
 class Hand:
+	'''Each player has a hand, which consists of two hole or pocket cards. These cards are unknown to the other players, and can be used with the community cards to make the best hand possible. The hand class takes every combination of the seven possible cards and ranks it.'''
 	hand = []
 	Name = "Hand"
+
 	def __init__(self, cards):
+		'''Initialized with hole cards.'''
 		self.hand = cards
 
 	def combine(self, cards):
+		'''This method takes up to 7 cards and returns every possible combination.'''
 		combs = []
 		lim = len(cards)
 		for i in range(lim):
@@ -17,12 +21,14 @@ class Hand:
 		return combs
 
 	def highest(self,community):
+		'''Returns the highest possible hand.'''
 		opts = self.combine(community+self.hand)
 		possible = [opts[i] for i in range(len(opts))]
 		return max(possible,key=self.rank)
 		#ranks = sorted([rank(self.hand + opts[i]) for i in len(opts)])
 
 	def rank(self,hand):
+		'''Ranks hands, and then adds kickers or tiebreakers.'''
 		if self.straight(hand) and self.flush(hand):
 			return [10,max(hand)[0]]
 		if self.kind(4,hand):
@@ -43,6 +49,7 @@ class Hand:
 			return [2,max(hand)[0]]
 
 	def straight(self,hand):
+		'''Checks for a straight.'''
 		vals = [i[0] for i in hand]
 		for i in range(4):
 			if vals[i] - 1 != vals[i+1]:
@@ -50,6 +57,7 @@ class Hand:
 		return True
 
 	def flush(self,hand):
+		'''Checks the suits for a flush.'''
 		suits = [i[1] for i in hand]
 		for suit in suits:
 			if suit != suits[0]:
@@ -57,6 +65,7 @@ class Hand:
 		return True
 
 	def kind(self,of,hand):
+		'''Checks if there is any card of which there is exactly 'of' repetitions, and returns the rest of the hand. If there is more than one such card, it will include both.'''
 		vals = [i[0] for i in hand]
 		toret = []
 		inc = [False]*5
@@ -82,4 +91,5 @@ class Hand:
 			[[vals[j] for j in range(len(vals)) if not inc[j]]]
 
 	def getcards(self):
+		'''Getter method to be used only by player.'''
 		return self.hand
