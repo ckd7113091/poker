@@ -1,4 +1,3 @@
-from dealer import Dealer
 from hand import Hand
 
 class Player:
@@ -34,12 +33,8 @@ class Player:
 		'''Allows a player to determine their hand's current rank.'''
 		return self.hand.rank(self.hand.highest(self.community))
 
-	def fold(self,deal):
-		money -= deal.fold(self)
-		return
-
-	def cc(self,deal):
-		deal.cc(self)
+	def fold(self,bet):
+		self.money -= bet
 		return
 
 	def raisepot(self,deal,bet):

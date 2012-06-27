@@ -5,7 +5,6 @@ class Dealer:
 	deck = range(52)
 	community = []
 	burned = []
-	a = None
 
 	def __init__(self):
 		'''Simply inststantializes a deck and shuffles it.'''
@@ -28,7 +27,9 @@ class Dealer:
 		'''Deals the two hole cards to each player, following the circular succession required.'''
 		hands = [[0 for i in range(2)] for i in range(players)]
 		for i in range(players*2):
-			hands[i%players][i//players] = self.int2card(self.deck.pop())
+			hands[i%players][i//players] =\
+				self.int2card(self.deck.pop())
+		for i in range(players):
 		return hands
 
 	def reveal(self,community):
