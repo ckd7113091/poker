@@ -37,10 +37,6 @@ class Player:
 		self.money -= bet
 		return
 
-	def raisepot(self,deal,bet):
-		deal.raisepot(self,bet)
-		return
-
 	def gethand(self):
 		'''Returns the cards in hand.'''
 		return self.hand.getcards()
