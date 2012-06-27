@@ -29,7 +29,6 @@ class Dealer:
 		for i in range(players*2):
 			hands[i%players][i//players] =\
 				self.int2card(self.deck.pop())
-		for i in range(players):
 		return hands
 
 	def reveal(self,community):

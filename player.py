@@ -5,20 +5,9 @@ class Player:
 	hand = []
 	community = []
 	money = 100
-	bet = 0
+	pbet = 0
 
-	def __init__(self):
-		'''Basic constructor, to declare type.'''
-		self.money = 100
-		return
-
-	def __init__(self,hand=None):
-		'''Optional hand parameter gives a player hole cards.'''
-		self.hand = Hand(hand)
-		self.money = 100
-		return 
-
-	def __init__(self,hand=None,money=None):
+	def __init__(self,hand=None,money=100):
 		'''Optional money parameter defines staring money.'''
 		self.hand = Hand(hand)
 		self.money = money
@@ -33,9 +22,18 @@ class Player:
 		'''Allows a player to determine their hand's current rank.'''
 		return self.hand.rank(self.hand.highest(self.community))
 
-	def fold(self,bet):
-		self.money -= bet
+	def bet(self,stake):
+		increase = stake - self.pbet
+		self.pbet = stake
+		self.money -= increase
+		return increase
+
+	def fold(self):
+		self.pbet = 0
 		return
+
+	def getbet(self):
+		return self.pbet
 
 	def getmoney(self):
 		return self.money

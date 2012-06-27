@@ -1,31 +1,26 @@
 class Pot:
-	bets = []
+	pots = []
+	sides = 0
+	stake = 10
 	state = []
 
 	def __init__(self,players,blind):
-		state = [0]*len(players)
-		bets = [0]*len(players)
-		bets[0] = blind/2
-		bets[1] = blind
+		self.state = [0]*len(players)
+		self.pots = [0]
+		players[0].bet(blind/2)
+		players[1].bet(blind)
 		return
 
 	def fold(self,players,index):
 		players[index].fold()
-		state[index] = 2
-
-	def cc(self,players,index):
-		bets[index] = bets[index-1]
 		return
 
-	def raise(self,players,index,value):
-		low = []
-		plow = []
-		i = 0
+	def cc(self,players,index):
+		if self.sides == 0:
+			self.pots[self.state[index]] += players[index].bet(self.stake)	
+		return
 
-		while i < len(players):
-			if players[i].getmoney() < bets[i] + value:
-				plow.append(players.pop(i))
-				low.append(bets.pop(i))
-			else: i += 1
-
-			
+	def raisepot(self,players,index,value):
+		self.stake += value
+		players[index].bet(self.stake)
+		return
