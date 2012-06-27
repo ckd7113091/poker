@@ -37,6 +37,9 @@ class Player:
 		self.money -= bet
 		return
 
+	def getmoney(self):
+		return self.money
+
 	def gethand(self):
 		'''Returns the cards in hand.'''
 		return self.hand.getcards()
